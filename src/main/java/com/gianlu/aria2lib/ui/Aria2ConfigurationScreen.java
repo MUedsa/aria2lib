@@ -94,7 +94,14 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
         customOptions.setSummary(getResources().getQuantityString(R.plurals.customOptions_summary, customOptionsNum, customOptionsNum));
     }
 
-    public void setup(@StyleRes int theme, @NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener, @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref, @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref, boolean rpcEnabled) {
+    public void refreshCustomOptionsNumber(JSONObject obj){
+        int customOptionsNum;
+        if (obj == null) customOptionsNum = 0;
+        else customOptionsNum = obj.length();
+        customOptions.setSummary(getResources().getQuantityString(R.plurals.customOptions_summary, customOptionsNum, customOptionsNum));
+    }
+
+    public void setup(@StyleRes int theme, @NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener, @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref, @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref, @Nullable Prefs.KeyWithDefault<String> tickersUpdateUrlPref, boolean rpcEnabled) {
         this.rpcEnabled = rpcEnabled;
 
         LovelyInput.Builder lovelyInput = new LovelyInput.Builder()
@@ -166,6 +173,16 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
             startWithApp.setTitle(R.string.startServiceWithApp);
             startWithApp.setSummary(R.string.startServiceWithApp_summary);
             generalCategory.addView(startWithApp);
+        }
+
+        if(tickersUpdateUrlPref != null){
+            MaterialEditTextPreference tickersUpdateUrl = new MaterialEditTextPreference.Builder(getContext())
+                    .showValueMode(AbsMaterialTextValuePreference.SHOW_ON_BOTTOM)
+                    .key(tickersUpdateUrlPref.key())
+                    .defaultValue(tickersUpdateUrlPref.fallback())
+                    .build();
+            tickersUpdateUrl.setTitle(R.string.tickersUpdateUrl);
+            generalCategory.addView(tickersUpdateUrl);
         }
 
         customOptions = new MaterialStandardPreference(getContext());
@@ -262,8 +279,8 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
         refreshNics();
     }
 
-    public void setup(@NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener, @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref, @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref, boolean rpcEnabled) {
-        setup(0, outputPathListener, startAtBootPref, startWithAppPref, rpcEnabled);
+    public void setup(@NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener, @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref, @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref, @Nullable Prefs.KeyWithDefault<String> tickersUpdateUrlPref, boolean rpcEnabled) {
+        setup(0, outputPathListener, startAtBootPref, startWithAppPref, tickersUpdateUrlPref, rpcEnabled);
     }
 
     public void lockPreferences(boolean set) {

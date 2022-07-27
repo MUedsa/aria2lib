@@ -44,6 +44,7 @@
     <string name="edit">Edit</string>
     <string name="startServiceWithApp">Start service when the app opens</string>
     <string name="startServiceWithApp_summary">The service will start when the app is opened.</string>
+    <string name="tickersUpdateUrl">Tickers Update Url</string>
     <string name="importExport">Import/export</string>
     <string name="exportConfig">Export configuration</string>
     <string name="exportSessionFile">Export session</string>
