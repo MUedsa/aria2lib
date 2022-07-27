@@ -101,7 +101,13 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
         customOptions.setSummary(getResources().getQuantityString(R.plurals.customOptions_summary, customOptionsNum, customOptionsNum));
     }
 
-    public void setup(@StyleRes int theme, @NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener, @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref, @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref, @Nullable Prefs.KeyWithDefault<String> tickersUpdateUrlPref, boolean rpcEnabled) {
+    public void setup(@StyleRes int theme,
+                      @NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener,
+                      @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref,
+                      @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref,
+                      @Nullable Prefs.KeyWithDefault<String> tickersUpdateUrlPref,
+                      boolean rpcEnabled,
+                      boolean mpFocusBgEnable) {
         this.rpcEnabled = rpcEnabled;
 
         LovelyInput.Builder lovelyInput = new LovelyInput.Builder()
@@ -137,6 +143,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                 .build();
         outputPath.setTitle(R.string.outputPath);
         outputPath.setOverrideClickListener(outputPathListener);
+        if (mpFocusBgEnable) outputPath.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
         generalCategory.addView(outputPath);
 
         MaterialCheckboxPreference saveSession = new MaterialCheckboxPreference.Builder(getContext())
@@ -145,6 +152,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                 .build();
         saveSession.setTitle(R.string.saveSession);
         saveSession.setSummary(R.string.saveSession_summary);
+        if (mpFocusBgEnable) saveSession.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
         generalCategory.addView(saveSession);
 
         MaterialCheckboxPreference checkCertificate = new MaterialCheckboxPreference.Builder(getContext())
@@ -153,6 +161,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                 .build();
         checkCertificate.setTitle(R.string.checkCertificate);
         checkCertificate.setSummary(R.string.checkCertificate_summary);
+        if (mpFocusBgEnable) checkCertificate.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
         generalCategory.addView(checkCertificate);
 
         if (startAtBootPref != null) {
@@ -162,6 +171,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                     .build();
             startAtBoot.setTitle(R.string.startServiceAtBoot);
             startAtBoot.setSummary(R.string.startServiceAtBoot_summary);
+            if (mpFocusBgEnable) startAtBoot.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
             generalCategory.addView(startAtBoot);
         }
 
@@ -172,6 +182,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                     .build();
             startWithApp.setTitle(R.string.startServiceWithApp);
             startWithApp.setSummary(R.string.startServiceWithApp_summary);
+            if (mpFocusBgEnable) startWithApp.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
             generalCategory.addView(startWithApp);
         }
 
@@ -182,12 +193,14 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                     .defaultValue(tickersUpdateUrlPref.fallback())
                     .build();
             tickersUpdateUrl.setTitle(R.string.tickersUpdateUrl);
+            if (mpFocusBgEnable) tickersUpdateUrl.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
             generalCategory.addView(tickersUpdateUrl);
         }
 
         customOptions = new MaterialStandardPreference(getContext());
         customOptions.setOnClickListener(v -> getContext().startActivity(new Intent(getContext(), ConfigEditorActivity.class)));
         customOptions.setTitle(R.string.customOptions);
+        if (mpFocusBgEnable) customOptions.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
         generalCategory.addView(customOptions);
         refreshCustomOptionsNumber();
 
@@ -202,6 +215,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                     .defaultValue(String.valueOf(Aria2PK.RPC_PORT.fallback()))
                     .build();
             rpcPort.setTitle(R.string.rpcPort);
+            if (mpFocusBgEnable) rpcPort.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
             rpcCategory.addView(rpcPort);
 
             MaterialEditTextPreference rpcToken = new MaterialEditTextPreference.Builder(getContext())
@@ -210,6 +224,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                     .defaultValue(String.valueOf(Aria2PK.RPC_TOKEN.fallback()))
                     .build();
             rpcToken.setTitle(R.string.rpcToken);
+            if (mpFocusBgEnable) rpcToken.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
             rpcCategory.addView(rpcToken);
 
             MaterialCheckboxPreference listenAll = new MaterialCheckboxPreference.Builder(getContext())
@@ -218,6 +233,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                     .build();
             listenAll.setTitle(R.string.listenAllInterfaces);
             listenAll.setSummary(R.string.listenAllInterfaces_summary);
+            if (mpFocusBgEnable) listenAll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
             rpcCategory.addView(listenAll);
 
             MaterialCheckboxPreference allowOriginAll = new MaterialCheckboxPreference.Builder(getContext())
@@ -226,6 +242,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                     .build();
             allowOriginAll.setTitle(R.string.accessControlAllowOriginAll);
             allowOriginAll.setSummary(R.string.accessControlAllowOriginAll_summary);
+            if (mpFocusBgEnable) allowOriginAll.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
             rpcCategory.addView(allowOriginAll);
         } else {
             rpcCategory.setVisibility(GONE);
@@ -240,6 +257,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                 .build();
         showPerformance.setTitle(R.string.showPerformance);
         showPerformance.setSummary(R.string.showPerformance_summary);
+        if (mpFocusBgEnable) showPerformance.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
         notificationsCategory.addView(showPerformance);
 
         MaterialSeekBarPreference updateDelay = new MaterialSeekBarPreference.Builder(getContext())
@@ -248,6 +266,7 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
                 .defaultValue(Aria2PK.NOTIFICATION_UPDATE_DELAY.fallback())
                 .build();
         updateDelay.setTitle(R.string.updateInterval);
+        if (mpFocusBgEnable) updateDelay.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
         notificationsCategory.addView(updateDelay);
 
         setVisibilityController(showPerformance, new AbsMaterialPreference[]{updateDelay}, true);
@@ -274,13 +293,19 @@ public class Aria2ConfigurationScreen extends MaterialPreferenceScreen {
             logsMessage.setVisibility(View.VISIBLE);
         });
         clearLogs.setTitle(R.string.clearLogs);
+        if (mpFocusBgEnable) clearLogs.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.mp_focus_bg));
         logsCategory.addView(clearLogs);
 
         refreshNics();
     }
 
-    public void setup(@NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener, @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref, @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref, @Nullable Prefs.KeyWithDefault<String> tickersUpdateUrlPref, boolean rpcEnabled) {
-        setup(0, outputPathListener, startAtBootPref, startWithAppPref, tickersUpdateUrlPref, rpcEnabled);
+    public void setup(@NonNull AbsMaterialPreference.OverrideOnClickListener outputPathListener,
+                      @Nullable Prefs.KeyWithDefault<Boolean> startAtBootPref,
+                      @Nullable Prefs.KeyWithDefault<Boolean> startWithAppPref,
+                      @Nullable Prefs.KeyWithDefault<String> tickersUpdateUrlPref,
+                      boolean rpcEnabled) {
+        setup(0, outputPathListener, startAtBootPref, startWithAppPref, tickersUpdateUrlPref,
+                rpcEnabled, false);
     }
 
     public void lockPreferences(boolean set) {
